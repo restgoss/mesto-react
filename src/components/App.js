@@ -38,7 +38,6 @@ function App() {
   }
 
   return (
-    <>
       <div className="page">
         <Header />
         <Main
@@ -58,7 +57,6 @@ function App() {
           <label className="form__input-label">
             <input
               className="popup__input"
-              defaultValue=""
               id="name2"
               placeholder="Название"
               minLength={2}
@@ -71,7 +69,6 @@ function App() {
             <input
               className="popup__input"
               type="url"
-              defaultValue=""
               id="link"
               placeholder="Ссылка на картинку"
               required=""
@@ -119,7 +116,6 @@ function App() {
           <label className="form__input-label">
             <input
               className="popup__input"
-              defaultValue=""
               type="url"
               id="avatar"
               placeholder="Ссылка на изображение"
@@ -134,9 +130,6 @@ function App() {
           onClose={closeAllPopups}
         />
       </div>
-
-    </>
-
   );
 }
 
