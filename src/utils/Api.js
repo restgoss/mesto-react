@@ -21,7 +21,6 @@ class Api {
     }
 
     setUserInfo(userInfo) {
-        console.log(userInfo);
         return fetch(`${this._defaultUrl}/users/me`, {
             method: 'PATCH',
             headers: this._headers,
@@ -33,7 +32,6 @@ class Api {
     }
 
     addNewCard(data) {
-        console.log('API, addNewCard: ', data);
         return fetch(`${this._defaultUrl}/cards`, {
             method: "POST",
             headers: this._headers,
@@ -57,6 +55,15 @@ class Api {
             }),
         }).then(this._handleResponse);
     }
+
+    changeLikeCardStatus(id, isLiked) {
+        return fetch(`${this._defaultUrl}/cards/${id}/likes`, {
+            method: isLiked ? 'DELETE' : 'PUT',
+            headers: this._headers
+        }).then(this._handleResponse);
+    }
+
+
 
     like(id) {
         return fetch(`${this._defaultUrl}/cards/${id}/likes`, {
