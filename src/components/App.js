@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import Footer from "./Footer";
 import Header from "./Header";
 import Main from "./Main";
-import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import api from '../utils/Api';
@@ -10,15 +9,11 @@ import AddPlacePopup from './AddPlacePopup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 
-
 function App() {
 
-  // состояния попапов
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-
-
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -95,7 +90,6 @@ function App() {
     .catch((err) => console.log(err));
   }
 
-
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
@@ -108,20 +102,15 @@ function App() {
       })
   }, [])
 
-
-  const [currentUser, setCurrentUser] = useState('');
+  const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
     api.getUserInfo().then(res => {
 
       setCurrentUser(res);
     })
+    .catch((err) => console.log(err));
   }, [])
-
-
-
-
-
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -151,5 +140,3 @@ function App() {
 }
 
 export default App;
-
-// <template id="card__template" />

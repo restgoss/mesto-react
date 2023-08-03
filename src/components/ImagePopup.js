@@ -10,7 +10,6 @@ function ImagePopup(props) {
                 <button
                     type="button"
                     className="popup__close-button"
-                    src="<%=require('./images/cross-icon.svg')%>"
                     onClick={props.onClose}
                 />
                 <p className="popup__description">{props.card ? props.card.name : ""}</p>

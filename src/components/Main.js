@@ -3,15 +3,8 @@ import api from '../utils/Api';
 import editavatar from '../images/edit-avatar.svg';
 import Card from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-
-
-
-
 export default function Main(props) {
-
     const currentUser = React.useContext(CurrentUserContext);
-
-
     return (
         <main className="content">
             <section className="profile">
@@ -19,7 +12,7 @@ export default function Main(props) {
                     <img
                         className="profile__edit-icon"
                         src={editavatar}
-                        alt=''
+                        alt='Редактировать аватар'
                     />
                     <img className="profile__avatar" src={currentUser.avatar} alt="Изображение профиля" onClick={props.onEditAvatar} />
                 </div>

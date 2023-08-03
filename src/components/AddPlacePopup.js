@@ -43,7 +43,7 @@ function AddPlacePopup({ onSubmit, isOpened, onClose }) {
                     maxLength={30}
                     required=""
                     onChange={handleNameChange}
-                    value={name}
+                    value={name || ''}
                 />
                 <span className="popup__error" id="name2-error" />
             </label>
@@ -55,7 +55,7 @@ function AddPlacePopup({ onSubmit, isOpened, onClose }) {
                     placeholder="Ссылка на картинку"
                     required=""
                     onChange={handleLinkChange}
-                    value={link}
+                    value={link || ''}
                 />
                 <span className="popup__error" id="link-error" />
             </label>
