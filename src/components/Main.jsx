@@ -1,5 +1,5 @@
 import React from 'react';
-import api from '../utils/Api';
+import api from '../utils/api';
 import editavatar from '../images/edit-avatar.svg';
 import Card from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';

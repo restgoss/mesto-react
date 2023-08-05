@@ -1,91 +1,89 @@
-class Api {
-    constructor(data) {
-        this._defaultUrl = data.defaultUrl;
-        this._headers = data.headers;
+export class Api {
+    constructor(options) {
+      this.baseUrl = options.baseUrl;
+      this.headers = options.headers;
     }
-
-    _handleResponse(res) {
-        if (res.ok) {
-            return res.json();
-        } else {
-            return Promise.reject(`Error: ${res.status}`);
-        }
+  
+    async fetch(path, options = {}) {
+      const res = await fetch(`${this.baseUrl}${path}`, {
+        headers: {
+          ...this.headers,
+          ...options.headers,
+        },
+        ...options,
+      });
+      return this.checkResponse(res);
     }
-
+  
+    async checkResponse(res) {
+      const data = await res.json();
+      if (res.ok) {
+        return data;
+      } else {
+        const error = new Error(`API error: ${data.message || res.statusText}`);
+        throw error;
+      }
+    }
+  
     getUserInfo() {
-        return fetch(`${this._defaultUrl}/users/me`, { headers: this._headers }).then(this._handleResponse);
+      return this.fetch("/users/me");
     }
-
+  
     getInitialCards() {
-        return fetch(`${this._defaultUrl}/cards`, { headers: this._headers }).then(this._handleResponse);
+      return this.fetch("/cards");
     }
-
-    setUserInfo(userInfo) {
-        return fetch(`${this._defaultUrl}/users/me`, {
-            method: 'PATCH',
-            headers: this._headers,
-            body: JSON.stringify({
-                name: userInfo.name,
-                about: userInfo.about,
-            })
-        }).then(this._handleResponse);
+  
+    setUserInfo(data) {
+      const options = {
+        method: "PATCH",
+        body: JSON.stringify({
+          name: data.name,
+          about: data.about,
+        }),
+      };
+      return this.fetch("/users/me", options);
     }
-
-    addNewCard(data) {
-        return fetch(`${this._defaultUrl}/cards`, {
-            method: "POST",
-            headers: this._headers,
-            body: JSON.stringify(data),
-        }).then(this._handleResponse);
+  
+    addCard(data) {
+      const options = {
+        method: "POST",
+        body: JSON.stringify(data),
+      };
+      return this.fetch("/cards", options);
     }
-
-    deleteCard(id) {
-        return fetch(`${this._defaultUrl}/cards/${id}`, {
-            method: 'DELETE',
-            headers: this._headers,
-        }).then(this._handleResponse);
+  
+    deleteCard(cardId) {
+      const options = {
+        method: "DELETE",
+      };
+      return this.fetch(`/cards/${cardId}`, options);
     }
-
-    changeAvatar(data) {
-        return fetch(`${this._defaultUrl}/users/me/avatar`, {
-            method: 'PATCH',
-            headers: this._headers,
-            body: JSON.stringify({
-                avatar: data.avatar,
-            }),
-        }).then(this._handleResponse);
+  
+    setLike(cardId, isLiked) {
+      const method = isLiked ? "PUT" : "DELETE";
+      const options = {
+        method: method,
+      };
+      return this.fetch(`/cards/${cardId}/likes`, options);
     }
-
-    changeLikeCardStatus(id, isLiked) {
-        return fetch(`${this._defaultUrl}/cards/${id}/likes`, {
-            method: isLiked ? 'DELETE' : 'PUT',
-            headers: this._headers
-        }).then(this._handleResponse);
+  
+    setUserAvatar(data) {
+      const options = {
+        method: "PATCH",
+        body: JSON.stringify({
+          avatar: data.avatar,
+        }),
+      };
+      return this.fetch("/users/me/avatar", options);
     }
-
-
-
-    like(id) {
-        return fetch(`${this._defaultUrl}/cards/${id}/likes`, {
-            method: 'PUT',
-            headers: this._headers
-        }).then(this._handleResponse);
-    }
-
-    dislike(id) {
-        return fetch(`${this._defaultUrl}/cards/${id}/likes`, {
-            method: 'DELETE',
-            headers: this._headers
-        }).then(this._handleResponse);
-    }
-}
-
-const api = new Api({
-    defaultUrl: "https://mesto.nomoreparties.co/v1/cohort-68",
+  }
+  
+  const api = new Api({
+    baseUrl: "https://mesto.nomoreparties.co/v1/cohort-60",
     headers: {
-        authorization: "e4b97e6c-db3d-488c-9d45-b67fd2ee22aa",
-        "Content-Type": "application/json",
+      authorization: "71809042-8d48-4365-9054-51d9ac130004",
+      "Content-Type": "application/json",
     },
-})
-
-export default api;
+  });
+  
+  export default api;
